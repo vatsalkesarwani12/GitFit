@@ -12,4 +12,5 @@
     <color name="brown_border">#8A4633</color>
     <color name="brown_button">#975900</color>
     <color name="orange_status">#C57500</color>
+    <color name="edit_text_hint_color">#262525</color>
 </resources>

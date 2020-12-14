@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">GitFit</string>
+    <string name="fight">fight</string>
+    <string name="about_game">This is a battle between two github profile where points are awarded to decide the winner</string>
+    <string name="hint">GitHub Username</string>
+    <string name="enter_user">Enter User</string>
+    <string name="submit">Submit</string>
+    <string name="battle_result">Battle Result</string>
+    <string name="winner">Winner</string>
+    <string name="loser">Loser</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
 </resources>

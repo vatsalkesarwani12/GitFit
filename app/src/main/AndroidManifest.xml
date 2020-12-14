@@ -9,9 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GitFit">
-        <activity android:name=".SplashActivity"></activity>
-        <activity android:name=".BattleActivity" />
-        <activity android:name=".UserActivity">
+        <activity android:name=".UserActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".BattleActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
