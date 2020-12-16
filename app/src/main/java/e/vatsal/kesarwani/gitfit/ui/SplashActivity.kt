@@ -1,9 +1,11 @@
-package e.vatsal.kesarwani.gitfit
+package e.vatsal.kesarwani.gitfit.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import e.vatsal.kesarwani.gitfit.R
+import e.vatsal.kesarwani.gitfit.ui.user.UserActivity
 
 class SplashActivity : AppCompatActivity() {
 

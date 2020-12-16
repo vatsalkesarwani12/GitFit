@@ -1,9 +1,10 @@
-package e.vatsal.kesarwani.gitfit
+package e.vatsal.kesarwani.gitfit.ui
 
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import e.vatsal.kesarwani.gitfit.R
 
 class BattleActivity : AppCompatActivity() {
 
