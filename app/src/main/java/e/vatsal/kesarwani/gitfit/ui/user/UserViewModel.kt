@@ -13,7 +13,7 @@ class UserViewModel constructor(
 
     var user1 : MutableLiveData<String> = MutableLiveData()
     var user2 : MutableLiveData<String> = MutableLiveData()
-    var flag : MutableLiveData<Int> = MutableLiveData()
+    var flag : MutableLiveData<Int> = MutableLiveData(0)
 
     fun getUsers(user: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))

@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 interface ApiInterface {
 
-    @GET("{user}/repos")
+    @GET("users/{user}/repos")
     suspend fun getRepos(
         @Path("user") user : String
     ) : RepoResponse

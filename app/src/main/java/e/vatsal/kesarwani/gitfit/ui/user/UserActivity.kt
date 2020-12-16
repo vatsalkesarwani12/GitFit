@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
 import e.vatsal.kesarwani.gitfit.R
 import e.vatsal.kesarwani.gitfit.data.network.ApiHelper
 import e.vatsal.kesarwani.gitfit.data.network.RetrofitBuilder
@@ -14,6 +16,7 @@ import e.vatsal.kesarwani.gitfit.databinding.ActivityUserBinding
 import e.vatsal.kesarwani.gitfit.ui.BattleActivity
 import e.vatsal.kesarwani.gitfit.ui.ViewModelFactory
 import e.vatsal.kesarwani.gitfit.utils.Status
+import timber.log.Timber
 
 class UserActivity : AppCompatActivity() {
 
@@ -58,6 +61,18 @@ class UserActivity : AppCompatActivity() {
                 false -> viewBinding.etUser2.error = null
             }
         })
+        viewModel.flag.observe(this, {
+            when(it==2){
+                true -> {
+                    viewBinding.imageView.visibility = View.GONE
+                    viewBinding.btStartBattle.visibility = View.VISIBLE
+                }
+                false -> {
+                    viewBinding.imageView.visibility = View.VISIBLE
+                    viewBinding.btStartBattle.visibility = View.GONE
+                }
+            }
+        })
     }
 
     private fun onclick() {
@@ -84,14 +99,14 @@ class UserActivity : AppCompatActivity() {
             viewBinding.group1.visibility = View.VISIBLE
             viewBinding.card1.visibility = View.GONE
 
-            /**reset data for the model*/
+            viewModel.flag.value = viewModel.flag.value?.minus(1)
         }
 
         viewBinding.imCancel2.setOnClickListener{
             viewBinding.group2.visibility = View.VISIBLE
             viewBinding.card2.visibility = View.GONE
 
-            /**reset data for the model*/
+            viewModel.flag.value = viewModel.flag.value?.minus(1)
         }
     }
 
@@ -104,9 +119,13 @@ class UserActivity : AppCompatActivity() {
                         viewBinding.group1.visibility = View.GONE
                         viewBinding.card1.visibility = View.VISIBLE
 
-                        /**
-                         * render data to the card1
-                         * fetch repos in background*/
+                        viewBinding.tvUserName1.text = it.data?.name
+
+                        Glide.with(this)
+                            .load(it.data?.avatarUrl)
+                            .into(viewBinding.imUserImage1)
+
+                        //todo count the follow and following count
 
                         fetchRepo1()
                     }
@@ -132,9 +151,13 @@ class UserActivity : AppCompatActivity() {
                         viewBinding.group2.visibility = View.GONE
                         viewBinding.card2.visibility = View.VISIBLE
 
-                        /**
-                         * render data to the card1
-                         * fetch repos in background*/
+                        viewBinding.tvUserName2.text = it.data?.name
+
+                        Glide.with(this)
+                            .load(it.data?.avatarUrl)
+                            .into(viewBinding.imUserImage2)
+
+                        //todo count the follow and following count
 
                         fetchRepo2()
                     }
@@ -151,9 +174,6 @@ class UserActivity : AppCompatActivity() {
         })
     }
 
-    /** After fetch repo1 and 2 are successful enable the start battle button
-     * hide image view.*/
-
     private fun fetchRepo1() {
 
         viewModel.getRepo(viewModel.user1.value.toString()).observe(this, {
@@ -161,11 +181,12 @@ class UserActivity : AppCompatActivity() {
                 when(it.status) {
                     Status.SUCCESS -> {
                         viewModel.flag.value = viewModel.flag.value?.plus(1)
-                        /** set a flag +1*/
+
+                        //todo count the fork count, star count
                     }
 
                     Status.ERROR -> {
-                        //todo show SnackBar
+                        Toast.makeText(this,it.message,Toast.LENGTH_LONG).show()
                     }
 
                     Status.LOADING -> {
@@ -184,11 +205,12 @@ class UserActivity : AppCompatActivity() {
                 when(it.status) {
                     Status.SUCCESS -> {
                         viewModel.flag.value = viewModel.flag.value?.plus(1)
-                        /** set a flag +1*/
+
+                        //todo count the fork count, star count
                     }
 
                     Status.ERROR -> {
-                        //todo show SnackBar
+                        Toast.makeText(this,it.message,Toast.LENGTH_LONG).show()
                     }
 
                     Status.LOADING -> {

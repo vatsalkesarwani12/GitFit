@@ -1,5 +1,6 @@
 package e.vatsal.kesarwani.gitfit.data.network
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import e.vatsal.kesarwani.gitfit.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -25,7 +26,7 @@ object RetrofitBuilder {
     // OkhttpClient for building http request url
     private val okHttpClient = OkHttpClient().newBuilder()
         .addInterceptor(interceptor)
-        .addNetworkInterceptor(httpInterceptor)
+        .addNetworkInterceptor(StethoInterceptor())
         .build()
 
     private fun retrofit(): Retrofit = Retrofit.Builder()
