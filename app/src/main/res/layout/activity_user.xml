@@ -283,7 +283,9 @@
                     android:layout_height="60dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="24dp"
-                    android:src="@color/white"/>
+                    android:src="@color/white"
+                    app:civ_border_width="1dp"
+                    app:civ_border_color="@color/white" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvUserName1"
@@ -334,7 +336,9 @@
                     android:layout_height="60dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="24dp"
-                    android:src="@color/white" />
+                    android:src="@color/white"
+                    app:civ_border_width="1dp"
+                    app:civ_border_color="@color/white"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvUserName2"

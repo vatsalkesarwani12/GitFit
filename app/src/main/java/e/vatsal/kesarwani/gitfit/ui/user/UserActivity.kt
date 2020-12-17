@@ -11,13 +11,13 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import e.vatsal.kesarwani.gitfit.R
 import e.vatsal.kesarwani.gitfit.data.model.RepoCountResponse
+import e.vatsal.kesarwani.gitfit.data.model.ResultModel
 import e.vatsal.kesarwani.gitfit.data.network.ApiHelper
 import e.vatsal.kesarwani.gitfit.data.network.RetrofitBuilder
 import e.vatsal.kesarwani.gitfit.databinding.ActivityUserBinding
 import e.vatsal.kesarwani.gitfit.ui.BattleActivity
 import e.vatsal.kesarwani.gitfit.ui.ViewModelFactory
 import e.vatsal.kesarwani.gitfit.utils.Status
-import timber.log.Timber
 
 class UserActivity : AppCompatActivity() {
 
@@ -31,9 +31,9 @@ class UserActivity : AppCompatActivity() {
 
     lateinit var viewModel : UserViewModel
 
-    private var score1 : Int = 0
+    private var score : Int = 0
 
-    private var score2 : Int = 0
+    private var resultModel = ResultModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,8 +96,11 @@ class UserActivity : AppCompatActivity() {
         }
 
         viewBinding.btStartBattle.setOnClickListener {
-            // intent need to be parsed later
-            BattleActivity.start(this)
+
+            BattleActivity.start(
+                    this,
+                    resultModel
+            )
         }
 
         viewBinding.imCancel1.setOnClickListener{
@@ -130,6 +133,16 @@ class UserActivity : AppCompatActivity() {
                             .load(it.data?.avatarUrl)
                             .into(viewBinding.imUserImage1)
 
+                        val model = ResultModel.User()
+
+                        model.name = it.data?.name
+                        model.avatarUrl = it.data?.avatarUrl
+                        model.followers = it.data?.followers
+                        model.following = it.data?.following
+                        model.publicRepos = it.data?.publicRepos
+
+                        resultModel.user1 = model
+
                         it.data?.followers?.let { it1 -> fetchRepo1(it1) }
                     }
 
@@ -159,6 +172,16 @@ class UserActivity : AppCompatActivity() {
                         Glide.with(this)
                             .load(it.data?.avatarUrl)
                             .into(viewBinding.imUserImage2)
+
+                        val model = ResultModel.User()
+
+                        model.name = it.data?.name
+                        model.avatarUrl = it.data?.avatarUrl
+                        model.followers = it.data?.followers
+                        model.following = it.data?.following
+                        model.publicRepos = it.data?.publicRepos
+
+                        resultModel.user2 = model
 
                         it.data?.followers?.let { it1 -> fetchRepo2(it1) }
                     }
@@ -224,22 +247,22 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun scoreCalculate(list : RepoCountResponse, follow: Int, user : Boolean) {
-        //val list : List<RepoCountResponse.RepoResponseItem> = listOf(it.data) as List<RepoCountResponse.RepoResponseItem>
         var star  = 0
         var fork  = 0
+        var publicRepo = 0
         for (element in list){
             if (element.fork == false) {
+                publicRepo++
                 star += element.stargazersCount!!*3  /**star gives you 3 points */
                 fork += element.forksCount!!*5       /**fork gives you 5 points */
             }                                        /**follow gives you 1 point */
-        }
+        }                                            /**public repo give 1 point only which you are owner */
 
+        score = star+fork+follow+publicRepo
         if (user) {
-            score1 = star+fork+follow
+            resultModel.score1 = score
         }else {
-            score2 = star+fork+follow
+            resultModel.score2 = score
         }
-
-        //Toast.makeText(this,"$score1 $score2",Toast.LENGTH_LONG).show()
     }
 }
