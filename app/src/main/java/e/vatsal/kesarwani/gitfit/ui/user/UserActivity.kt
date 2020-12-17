@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import e.vatsal.kesarwani.gitfit.R
+import e.vatsal.kesarwani.gitfit.data.model.RepoCountResponse
 import e.vatsal.kesarwani.gitfit.data.network.ApiHelper
 import e.vatsal.kesarwani.gitfit.data.network.RetrofitBuilder
 import e.vatsal.kesarwani.gitfit.databinding.ActivityUserBinding
@@ -29,6 +30,10 @@ class UserActivity : AppCompatActivity() {
     private lateinit var viewBinding : ActivityUserBinding
 
     lateinit var viewModel : UserViewModel
+
+    private var score1 : Int = 0
+
+    private var score2 : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,9 +130,7 @@ class UserActivity : AppCompatActivity() {
                             .load(it.data?.avatarUrl)
                             .into(viewBinding.imUserImage1)
 
-                        //todo count the follow and following count
-
-                        fetchRepo1()
+                        it.data?.followers?.let { it1 -> fetchRepo1(it1) }
                     }
 
                     Status.ERROR -> {
@@ -157,9 +160,7 @@ class UserActivity : AppCompatActivity() {
                             .load(it.data?.avatarUrl)
                             .into(viewBinding.imUserImage2)
 
-                        //todo count the follow and following count
-
-                        fetchRepo2()
+                        it.data?.followers?.let { it1 -> fetchRepo2(it1) }
                     }
 
                     Status.ERROR -> {
@@ -174,7 +175,7 @@ class UserActivity : AppCompatActivity() {
         })
     }
 
-    private fun fetchRepo1() {
+    private fun fetchRepo1(follow : Int) {
 
         viewModel.getRepo(viewModel.user1.value.toString()).observe(this, {
             it.let {
@@ -182,7 +183,7 @@ class UserActivity : AppCompatActivity() {
                     Status.SUCCESS -> {
                         viewModel.flag.value = viewModel.flag.value?.plus(1)
 
-                        //todo count the fork count, star count
+                        scoreCalculate(it.data!!, follow, true)
                     }
 
                     Status.ERROR -> {
@@ -198,7 +199,7 @@ class UserActivity : AppCompatActivity() {
 
     }
 
-    private fun fetchRepo2() {
+    private fun fetchRepo2(follow : Int) {
 
         viewModel.getRepo(viewModel.user2.value.toString()).observe(this, {
             it.let {
@@ -206,7 +207,7 @@ class UserActivity : AppCompatActivity() {
                     Status.SUCCESS -> {
                         viewModel.flag.value = viewModel.flag.value?.plus(1)
 
-                        //todo count the fork count, star count
+                        scoreCalculate(it.data!!, follow, false)
                     }
 
                     Status.ERROR -> {
@@ -220,5 +221,25 @@ class UserActivity : AppCompatActivity() {
             }
         })
 
+    }
+
+    private fun scoreCalculate(list : RepoCountResponse, follow: Int, user : Boolean) {
+        //val list : List<RepoCountResponse.RepoResponseItem> = listOf(it.data) as List<RepoCountResponse.RepoResponseItem>
+        var star  = 0
+        var fork  = 0
+        for (element in list){
+            if (element.fork == false) {
+                star += element.stargazersCount!!*3  /**star gives you 3 points */
+                fork += element.forksCount!!*5       /**fork gives you 5 points */
+            }                                        /**follow gives you 1 point */
+        }
+
+        if (user) {
+            score1 = star+fork+follow
+        }else {
+            score2 = star+fork+follow
+        }
+
+        //Toast.makeText(this,"$score1 $score2",Toast.LENGTH_LONG).show()
     }
 }
