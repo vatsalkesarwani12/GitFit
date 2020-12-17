@@ -1,4 +1,4 @@
-package e.vatsal.kesarwani.gitfit.ui
+package e.vatsal.kesarwani.gitfit.app
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

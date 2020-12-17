@@ -12,6 +12,8 @@ import e.vatsal.kesarwani.gitfit.databinding.ActivityBattleBinding
 
 class BattleActivity : AppCompatActivity() {
 
+    //todo help option in appbar to show dialog to tell how result is calculated.
+
     companion object{
         private const val INTENT_BATTLE_DATA = "intent_battle_data"
         fun start(context: Context, resultModel: ResultModel) {

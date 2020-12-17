@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -16,10 +15,13 @@ import e.vatsal.kesarwani.gitfit.data.network.ApiHelper
 import e.vatsal.kesarwani.gitfit.data.network.RetrofitBuilder
 import e.vatsal.kesarwani.gitfit.databinding.ActivityUserBinding
 import e.vatsal.kesarwani.gitfit.ui.BattleActivity
-import e.vatsal.kesarwani.gitfit.ui.ViewModelFactory
+import e.vatsal.kesarwani.gitfit.app.ViewModelFactory
 import e.vatsal.kesarwani.gitfit.utils.Status
+import e.vatsal.kesarwani.gitfit.utils.showSnackBar
 
 class UserActivity : AppCompatActivity() {
+
+    //todo implement dialog
 
     companion object{
         fun start(context : Context) {
@@ -147,7 +149,7 @@ class UserActivity : AppCompatActivity() {
                     }
 
                     Status.ERROR -> {
-                        viewBinding.etUser1.error = it.message
+                        it.message?.let { it1 -> showSnackBar(it1) }
                     }
 
                     Status.LOADING -> {
@@ -187,7 +189,7 @@ class UserActivity : AppCompatActivity() {
                     }
 
                     Status.ERROR -> {
-                        viewBinding.etUser2.error = it.message
+                        it.message?.let { it1 -> showSnackBar(it1) }
                     }
 
                     Status.LOADING -> {
@@ -210,7 +212,7 @@ class UserActivity : AppCompatActivity() {
                     }
 
                     Status.ERROR -> {
-                        Toast.makeText(this,it.message,Toast.LENGTH_LONG).show()
+                        it.message?.let { it1 -> showSnackBar(it1) }
                     }
 
                     Status.LOADING -> {
@@ -234,7 +236,7 @@ class UserActivity : AppCompatActivity() {
                     }
 
                     Status.ERROR -> {
-                        Toast.makeText(this,it.message,Toast.LENGTH_LONG).show()
+                        it.message?.let { it1 -> showSnackBar(it1) }
                     }
 
                     Status.LOADING -> {

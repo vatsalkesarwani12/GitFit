@@ -9,6 +9,12 @@ import timber.log.Timber
 
 class MyApplication : Application() {
 
+    //todo debug stetho and timber
+
+    //todo add animation on screen change
+
+    //todo theme switch in the appbar
+
     override fun onCreate() {
         super.onCreate()
         setDebugTools()

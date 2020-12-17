@@ -9,6 +9,8 @@ import e.vatsal.kesarwani.gitfit.ui.user.UserActivity
 
 class SplashActivity : AppCompatActivity() {
 
+    //todo splash with motion layout
+
     companion object{
         private const val TIME_DELAY = 2000L
     }
