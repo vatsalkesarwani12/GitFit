@@ -2,22 +2,27 @@ package e.vatsal.kesarwani.gitfit.ui.user
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import e.vatsal.kesarwani.gitfit.R
+import e.vatsal.kesarwani.gitfit.app.ViewModelFactory
 import e.vatsal.kesarwani.gitfit.data.model.RepoCountResponse
 import e.vatsal.kesarwani.gitfit.data.model.ResultModel
 import e.vatsal.kesarwani.gitfit.data.network.ApiHelper
 import e.vatsal.kesarwani.gitfit.data.network.RetrofitBuilder
 import e.vatsal.kesarwani.gitfit.databinding.ActivityUserBinding
 import e.vatsal.kesarwani.gitfit.ui.BattleActivity
-import e.vatsal.kesarwani.gitfit.app.ViewModelFactory
+import e.vatsal.kesarwani.gitfit.utils.SharedPref
 import e.vatsal.kesarwani.gitfit.utils.Status
 import e.vatsal.kesarwani.gitfit.utils.showSnackBar
+import e.vatsal.kesarwani.gitfit.utils.showToast
 
 class UserActivity : AppCompatActivity() {
 
@@ -28,6 +33,8 @@ class UserActivity : AppCompatActivity() {
             context.startActivity(Intent(context, UserActivity::class.java))
         }
     }
+
+    private lateinit var sharedPreferences : SharedPreferences
 
     private lateinit var viewBinding : ActivityUserBinding
 
@@ -40,10 +47,42 @@ class UserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_user)
+        sharedPreferences = getSharedPreferences(SharedPref.SHARED_PREF.name, Context.MODE_PRIVATE)
+        setSupportActionBar(viewBinding.toolUser)
         setupViewModel()
         setUpUI()
         setUpObservers()
         onclick()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_theme, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.themeSwitch -> {
+                changeTheme()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun changeTheme() {
+        sharedPreferences.edit()
+                .putBoolean(SharedPref.IS_DARK_MODE.name, !sharedPreferences.getBoolean(SharedPref.IS_DARK_MODE.name,false))
+                .apply()
+
+        when(sharedPreferences.getBoolean(SharedPref.IS_DARK_MODE.name, true)) {
+            true -> {
+                setTheme(R.style.Theme_GitFit_Dark)
+            }
+            false -> {
+                setTheme(R.style.Theme_GitFit_Light)
+            }
+        }
     }
 
     private fun setupViewModel() {
