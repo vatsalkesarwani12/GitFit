@@ -19,6 +19,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolBattle"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
                 app:title="@string/app_name"

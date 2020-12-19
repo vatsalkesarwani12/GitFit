@@ -33,9 +33,9 @@ class MyApplication : Application() {
     private fun setTheme() {
 
         if (sharedPreferences.getBoolean(SharedPref.IS_DARK_MODE.name, true))
-            setTheme(R.style.Dark)
+            applicationContext.setTheme(R.style.Dark)
         else
-            setTheme(R.style.Light)
+            applicationContext.setTheme(R.style.Light)
     }
 
 }

@@ -3,6 +3,9 @@ package e.vatsal.kesarwani.gitfit.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -30,9 +33,33 @@ class BattleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_battle)
-        overridePendingTransition( android.R.anim.fade_in, android.R.anim.fade_out );
+        setSupportActionBar(viewBinding.toolBattle)
+        overridePendingTransition( android.R.anim.fade_in, android.R.anim.fade_out )
         handleIntent()
         updateUI()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.help -> {
+                showDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showDialog() {
+        val alertDialog  = AlertDialog.Builder(this)
+        alertDialog.setCancelable(true)
+        alertDialog.setTitle("Score Calculator")
+        alertDialog.setMessage("Star gives you 3 points\nFork gives you 5 points\nFollow gives you 1 point\nPublic repo give 1 point")
+        alertDialog.show()
     }
 
     private fun handleIntent() {

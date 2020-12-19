@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.ThemeUtils
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
@@ -32,7 +33,7 @@ class UserActivity : AppCompatActivity() {
         }
     }
 
-    private lateinit var sharedPreferences : SharedPreferences
+    //private lateinit var sharedPreferences : SharedPreferences
 
     private lateinit var viewBinding : ActivityUserBinding
 
@@ -46,7 +47,7 @@ class UserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         overridePendingTransition( android.R.anim.fade_in, android.R.anim.fade_out );
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_user)
-        sharedPreferences = getSharedPreferences(SharedPref.SHARED_PREF.name, Context.MODE_PRIVATE)
+        //sharedPreferences = getSharedPreferences(SharedPref.SHARED_PREF.name, Context.MODE_PRIVATE)
         setSupportActionBar(viewBinding.toolUser)
         setupViewModel()
         setUpUI()
@@ -54,38 +55,39 @@ class UserActivity : AppCompatActivity() {
         onclick()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+   /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_theme, menu)
         return super.onCreateOptionsMenu(menu)
-    }
+    }*/
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.themeSwitch -> {
+
                 sharedPreferences.edit()
                         .putBoolean(SharedPref.IS_DARK_MODE.name, !sharedPreferences.getBoolean(SharedPref.IS_DARK_MODE.name,false))
                         .apply()
-
+                showToast("Pressed")
                 changeTheme()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
+    }*/
 
-    private fun changeTheme() {
+    /*private fun changeTheme() {
 
-        when(true) {  //sharedPreferences.getBoolean(SharedPref.IS_DARK_MODE.name, true)
-            true -> {
-                setTheme(R.style.Dark)
-                recreate()
-            }
+        when(sharedPreferences.getBoolean(SharedPref.IS_DARK_MODE.name, true)) {
             false -> {
                 setTheme(R.style.Light)
                 recreate()
             }
+            else -> {
+                setTheme(R.style.Dark)
+                recreate()
+            }
         }
-    }
+    }*/
 
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(

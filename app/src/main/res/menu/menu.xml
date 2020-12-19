@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/themeSwitch"
+        android:id="@+id/help"
         android:title="@string/switch_theme"
         app:showAsAction="always"
-        android:icon="@drawable/ic_outline_cancel_24"/>
+        android:icon="@drawable/ic_baseline_help_outline_24"/>
 
 </menu>
