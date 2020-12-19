@@ -28,5 +28,4 @@ Just enter the github id of the user and compare the profiles.
 <img src="https://github.com/plazzy99/GitFit/blob/master/ScreenShots/light_user1.png" alt="drawing" width="200"/>
 <img src="https://github.com/plazzy99/GitFit/blob/master/ScreenShots/light_battle.png" alt="drawing" width="200"/>
 
-## Download app from the link
-[Download both the files and then click .apk file](https://drive.google.com/drive/folders/143NyQbPmaSTS_Ma0WRLhk5iJMICmjirc?usp=sharing)
+## Give it a ⭐ if you liked it.
