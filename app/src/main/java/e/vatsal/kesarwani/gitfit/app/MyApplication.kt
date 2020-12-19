@@ -13,10 +13,6 @@ import timber.log.Timber
 
 class MyApplication : Application() {
 
-    //todo add animation on screen change
-
-    //todo theme switch in the appbar
-
     private lateinit var sharedPreferences : SharedPreferences
 
     override fun onCreate() {
@@ -35,10 +31,11 @@ class MyApplication : Application() {
     }
 
     private fun setTheme() {
+
         if (sharedPreferences.getBoolean(SharedPref.IS_DARK_MODE.name, true))
-            setTheme(R.style.Theme_GitFit_Dark)
+            setTheme(R.style.Dark)
         else
-            setTheme(R.style.Theme_GitFit_Light)
+            setTheme(R.style.Light)
     }
 
 }

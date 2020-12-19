@@ -26,8 +26,6 @@ import e.vatsal.kesarwani.gitfit.utils.showToast
 
 class UserActivity : AppCompatActivity() {
 
-    //todo implement dialog
-
     companion object{
         fun start(context : Context) {
             context.startActivity(Intent(context, UserActivity::class.java))
@@ -46,6 +44,7 @@ class UserActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        overridePendingTransition( android.R.anim.fade_in, android.R.anim.fade_out );
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_user)
         sharedPreferences = getSharedPreferences(SharedPref.SHARED_PREF.name, Context.MODE_PRIVATE)
         setSupportActionBar(viewBinding.toolUser)
@@ -63,6 +62,10 @@ class UserActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.themeSwitch -> {
+                sharedPreferences.edit()
+                        .putBoolean(SharedPref.IS_DARK_MODE.name, !sharedPreferences.getBoolean(SharedPref.IS_DARK_MODE.name,false))
+                        .apply()
+
                 changeTheme()
                 true
             }
@@ -71,16 +74,15 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun changeTheme() {
-        sharedPreferences.edit()
-                .putBoolean(SharedPref.IS_DARK_MODE.name, !sharedPreferences.getBoolean(SharedPref.IS_DARK_MODE.name,false))
-                .apply()
 
-        when(sharedPreferences.getBoolean(SharedPref.IS_DARK_MODE.name, true)) {
+        when(true) {  //sharedPreferences.getBoolean(SharedPref.IS_DARK_MODE.name, true)
             true -> {
-                setTheme(R.style.Theme_GitFit_Dark)
+                setTheme(R.style.Dark)
+                recreate()
             }
             false -> {
-                setTheme(R.style.Theme_GitFit_Light)
+                setTheme(R.style.Light)
+                recreate()
             }
         }
     }
@@ -137,7 +139,7 @@ class UserActivity : AppCompatActivity() {
         }
 
         viewBinding.btStartBattle.setOnClickListener {
-
+            overridePendingTransition( android.R.anim.fade_in, android.R.anim.fade_out )
             BattleActivity.start(
                     this,
                     resultModel

@@ -30,7 +30,7 @@ class BattleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_battle)
-
+        overridePendingTransition( android.R.anim.fade_in, android.R.anim.fade_out );
         handleIntent()
         updateUI()
     }
